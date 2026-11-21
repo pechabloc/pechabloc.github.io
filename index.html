@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pechabloc — Club d'escalade de bloc à Péchabou</title>
+<meta name="description" content="Pechabloc, club associatif d'escalade de bloc à Péchabou (31). Mur de 5 m à la Maison des Sports, ouverture au printemps 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --nuit:#16191c; --ardoise:#22292e; --ardoise2:#2b3338; --trait:#3a444a;
+    --orange:#ff5a1f; --orange2:#ff7a3d; --texte:#e9ecee; --doux:#a7b0b5;
+    --jaune:#ffd166;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--nuit);color:var(--texte);font-family:Inter,system-ui,sans-serif;line-height:1.55}
+  h1,h2,h3,.big{font-family:"Bebas Neue",Impact,"Arial Narrow",sans-serif;font-weight:400;letter-spacing:.5px;line-height:1}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  .orange{color:var(--orange)}
+  .surtitre{font-size:.75rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+
+  /* Étiquettes d'honnêteté : ce qui n'est pas encore décidé */
+  .bientot,.aconf{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 8px;border-radius:99px;vertical-align:middle;margin-left:6px;font-family:Inter,sans-serif}
+  .bientot{background:rgba(255,90,31,.15);color:var(--orange2);border:1px solid rgba(255,90,31,.4)}
+  .aconf{background:rgba(255,209,102,.12);color:var(--jaune);border:1px dashed var(--jaune)}
+
+  /* En-tête */
+  header{position:sticky;top:0;z-index:10;background:rgba(22,25,28,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--trait)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .marque{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .marque img{height:40px;width:auto;background:#fff;border-radius:8px;padding:3px}
+  .marque span{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.6rem}
+  nav{display:flex;gap:18px;font-size:.85rem;font-weight:600}
+  nav a{text-decoration:none;color:var(--doux)} nav a:hover{color:var(--orange)}
+  @media(max-width:720px){nav{display:none}}
+
+  /* Bandeau d'accueil */
+  .hero{position:relative;overflow:hidden;min-height:min(88vh,720px);display:flex;align-items:center;text-align:center;
+    background:radial-gradient(ellipse at 50% 40%,#2e383e 0%,var(--nuit) 70%)}
+  .hero svg.mur{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+  .hero .contenu{position:relative;width:100%;padding:60px 20px}
+  .hero h1{font-size:clamp(4rem,16vw,8.5rem)}
+  .hero .sous{font-family:"Bebas Neue",Impact,sans-serif;font-size:clamp(1.4rem,5vw,2rem);color:var(--orange);margin-top:4px}
+  .hero p.accroche{max-width:520px;margin:18px auto 0;color:var(--doux)}
+  .pastilles{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0}
+  .pastille{min-width:130px;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+  .pastille.plein{background:var(--orange);border-color:var(--orange)}
+  .pastille .big{font-size:2.6rem}
+  .pastille small{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;text-decoration:none;font-weight:700;
+    padding:14px 26px;border-radius:99px;box-shadow:0 8px 24px rgba(255,90,31,.35);transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ligne{background:transparent;border:2px solid var(--orange);box-shadow:none;color:var(--orange)}
+
+  /* Chiffres clés */
+  .chiffres{background:var(--ardoise);padding:34px 0;border-top:1px solid var(--trait);border-bottom:1px solid var(--trait)}
+  .chiffres .grille{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+  @media(max-width:720px){.chiffres .grille{grid-template-columns:repeat(2,1fr)}}
+  .chiffres .big{font-size:2.8rem}
+  .chiffres small{display:block;color:var(--doux);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+
+  section{padding:80px 0}
+  section.alt{background:var(--ardoise)}
+  .titre{text-align:center;margin-bottom:40px}
+  .titre h2{font-size:clamp(2.6rem,9vw,4rem)}
+  .titre p{color:var(--doux);max-width:620px;margin:14px auto 0}
+
+  /* Le mur */
+  .deux{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center}
+  @media(max-width:820px){.deux{grid-template-columns:1fr}}
+  .photo{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:var(--ardoise2);border:1px solid var(--trait)}
+  .photo svg{width:100%;height:100%}
+  .photo .legende{position:absolute;left:0;right:0;bottom:0;padding:16px 20px;background:linear-gradient(90deg,var(--orange),var(--orange2));
+    font-family:"Bebas Neue",Impact,sans-serif;font-size:1.6rem}
+  .photo .attente{position:absolute;top:14px;right:14px}
+  .texte h3{font-size:2.4rem;margin-bottom:14px}
+  .texte p{color:var(--doux);margin-bottom:14px} .texte p b{color:var(--texte)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .tag{font-size:.78rem;font-weight:700;color:var(--orange2);background:rgba(255,90,31,.12);padding:6px 12px;border-radius:99px}
+
+  /* Cartes */
+  .cartes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:820px){.cartes{grid-template-columns:1fr}}
+  .carte{background:var(--ardoise2);border:1px solid var(--trait);border-radius:18px;padding:28px 24px;text-align:center}
+  section.alt .carte{background:var(--nuit)}
+  .icone{width:54px;height:54px;margin:0 auto 16px;border-radius:14px;background:var(--orange);display:grid;place-items:center}
+  .icone svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .carte h3{font-size:1.7rem;margin-bottom:8px}
+  .carte p{color:var(--doux);font-size:.92rem}
+
+  /* Calendrier */
+  .frise{max-width:640px;margin:0 auto;position:relative;padding-left:30px}
+  .frise:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--trait)}
+  .etape{position:relative;margin-bottom:28px}
+  .etape:before{content:"";position:absolute;left:-27px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--nuit);border:3px solid var(--orange)}
+  .etape.fait:before{background:var(--orange)}
+  .etape .quand{font-family:"Bebas Neue",Impact,sans-serif;font-size:1.5rem;color:var(--orange)}
+  .etape p{color:var(--doux)}
+
+  .carte-acces{aspect-ratio:1/1}
+  .carte-acces iframe{width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
+
+  /* Actus Instagram */
+  .grille-insta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:780px;margin:0 auto}
+  .grille-insta .case{aspect-ratio:1/1;border-radius:12px;background:linear-gradient(135deg,var(--ardoise2),var(--ardoise));
+    border:1px dashed var(--trait);display:grid;place-items:center;text-align:center;padding:8px}
+  .grille-insta .case span{font-size:.7rem;color:var(--doux);font-weight:600}
+  #fil-insta{max-width:780px;margin:0 auto}
+
+  /* Adhésion */
+  .offres{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:780px;margin:0 auto}
+  @media(max-width:720px){.offres{grid-template-columns:1fr}}
+  .offre{background:var(--ardoise2);border:1px solid var(--trait);border-radius:18px;padding:28px 24px;position:relative}
+  .offre.vedette{border:2px solid var(--orange)}
+  .offre .ruban{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);font-size:.7rem;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:99px;white-space:nowrap}
+  .offre .qui{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+  .offre .prix{font-family:"Bebas Neue",Impact,sans-serif;font-size:2.6rem;margin:6px 0}
+  .offre ul{list-style:none;margin-top:12px}
+  .offre li{padding:5px 0 5px 24px;position:relative;font-size:.9rem;color:var(--doux)}
+  .offre li:before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:700}
+  .note{text-align:center;color:var(--doux);font-size:.85rem;margin-top:24px}
+
+  /* Contact */
+  .infos{display:grid;gap:16px;margin:24px 0}
+  .info{display:flex;gap:14px;align-items:flex-start}
+  .info .icone{margin:0;width:42px;height:42px;border-radius:12px;flex:none}
+  .info .icone svg{width:22px;height:22px}
+  .info b{display:block}
+  .info span{color:var(--doux);font-size:.92rem}
+  footer{border-top:1px solid var(--trait);padding:30px 0;color:var(--doux);font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .reseaux{display:flex;gap:10px}
+  .reseaux a{width:42px;height:42px;border-radius:12px;background:var(--ardoise2);display:grid;place-items:center}
+  .reseaux svg{width:20px;height:20px;stroke:var(--texte);fill:none;stroke-width:2}
+
+  /* Bandeau maquette */
+  .maquette{background:var(--jaune);color:#222;text-align:center;font-size:.8rem;font-weight:600;padding:8px 12px}
+</style>
+</head>
+<body>
+
+<div class="maquette">MAQUETTE v3 — les actus viennent toutes seules d'Instagram. « Bientôt » et « à confirmer » = pas encore décidé.</div>
+
+<header>
+  <div class="wrap">
+    <a class="marque" href="#"><img src="logo.png" alt="Logo Pechabloc"><span>Pecha<span class="orange">bloc</span></span></a>
+    <nav>
+      <a href="#mur">Le mur</a><a href="#club">Le club</a><a href="#actus">Actus</a><a href="#adherer">Adhérer</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ACCUEIL -->
+<section class="hero">
+  <!-- Mur dessiné : des prises et des volumes, pas de fausse photo -->
+  <svg class="mur" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <polygon points="0,0 400,0 400,300 0,300" fill="#20272b"/>
+    <polygon points="0,0 160,0 120,300 0,300" fill="#262e33"/>
+    <polygon points="260,0 400,0 400,300 300,300" fill="#1c2226"/>
+    <g fill="#ff5a1f"><polygon points="40,40 62,34 58,56"/><polygon points="300,60 330,50 322,82"/><polygon points="180,210 214,200 200,236"/><polygon points="90,250 110,240 112,262"/></g>
+    <g fill="#e9ecee" opacity=".75"><circle cx="80" cy="90" r="5"/><circle cx="210" cy="60" r="6"/><circle cx="350" cy="140" r="5"/><circle cx="140" cy="170" r="4"/><circle cx="260" cy="250" r="6"/><circle cx="30" cy="200" r="5"/></g>
+    <g fill="#4fb3a9" opacity=".8"><ellipse cx="240" cy="120" rx="9" ry="5"/><ellipse cx="60" cy="140" rx="7" ry="4"/><ellipse cx="370" cy="230" rx="8" ry="5"/></g>
+    <g fill="#ffd166" opacity=".8"><rect x="150" y="100" width="10" height="7" rx="2"/><rect x="320" y="190" width="9" height="7" rx="2"/><rect x="20" y="70" width="8" height="6" rx="2"/></g>
+    <g fill="#8b5cf6" opacity=".7"><circle cx="110" cy="40" r="5"/><circle cx="280" cy="170" r="5"/><circle cx="190" cy="280" r="4"/></g>
+  </svg>
+  <div class="contenu">
+    <div class="surtitre">Péchabou · Haute-Garonne</div>
+    <h1>Pecha<span class="orange">bloc</span></h1>
+    <div class="sous">Club associatif d'escalade de bloc</div>
+    <p class="accroche">Un mur de bloc à la Maison des Sports de Péchabou, un club de bénévoles, et de la place pour les petits comme pour les grands.</p>
+    <div class="pastilles">
+      <div class="pastille plein"><div class="big">5 m</div><small>de hauteur</small></div>
+      <div class="pastille"><div class="big">Bloc</div><small>sans corde ni baudrier</small></div>
+    </div>
+    <a class="btn" href="#mur">Découvrir le mur ↓</a>
+  </div>
+</section>
+
+<!-- CHIFFRES -->
+<div class="chiffres">
+  <div class="wrap grille">
+    <div><div class="big orange">5 m</div><small>de hauteur</small></div>
+    <div><div class="big">Tous</div><small>niveaux</small></div>
+    <div><div class="big orange">FFME</div><small>affiliation en cours</small></div>
+    <div><div class="big">100 %</div><small>bénévole</small></div>
+  </div>
+</div>
+
+<!-- LE MUR -->
+<section id="mur">
+  <div class="wrap">
+    <div class="titre"><div class="surtitre">Le mur</div><h2>5 mètres de <span class="orange">bloc</span><br>au cœur du village</h2></div>
+    <div class="deux">
+      <div class="photo">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="300" fill="#2b3338"/>
+          <polygon points="0,300 0,40 140,0 220,0 260,300" fill="#323c42"/>
+          <polygon points="220,0 400,0 400,300 260,300" fill="#262e33"/>
+          <g fill="#ff5a1f"><polygon points="60,80 84,70 80,96"/><polygon points="170,150 196,142 188,172"/><polygon points="300,90 322,84 318,108"/></g>
+          <g fill="#e9ecee" opacity=".7"><circle cx="110" cy="200" r="6"/><circle cx="240" cy="60" r="5"/><circle cx="350" cy="200" r="6"/></g>
+          <g fill="#4fb3a9" opacity=".8"><ellipse cx="200" cy="230" rx="10" ry="6"/><ellipse cx="90" cy="130" rx="8" ry="5"/></g>
+        </svg>
+        <span class="attente bientot">Photo du vrai mur bientôt</span>
+        <div class="legende">5 mètres de pur bloc</div>
+      </div>
+      <div class="texte">
+        <h3>Un mur municipal, <span class="orange">un club pour l'animer</span></h3>
+        <p>La commune de Péchabou équipe la <b>Maison des Sports</b> d'un mur d'escalade de bloc de <b>5 mètres de haut</b>. Pechabloc est l'association qui le fait vivre : créneaux, cours, ouverture des blocs, événements.</p>
+        <p>Accès des adhérents par <b>badge</b>.</p>
+        <p>Surface, nombre de blocs et horaires : <span class="bientot">bientôt</span></p>
+        <div class="tags"><span class="tag">Débutants</span><span class="tag">Confirmés</span><span class="tag">Enfants</span><span class="tag">Familles</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LE CLUB -->
+<section id="club" class="alt">
+  <div class="wrap">
+    <div class="titre"><div class="surtitre">Le club</div><h2>Plus qu'un mur, <span class="orange">un club</span></h2>
+      <p>Une association de bénévoles, en cours d'affiliation à la Fédération française de la montagne et de l'escalade (FFME).</p></div>
+    <div class="cartes">
+      <div class="carte">
+        <div class="icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div>
+        <h3>Jeunes</h3>
+        <p>Des cours encadrés par un moniteur diplômé d'État, à partir de la rentrée de septembre 2027.</p>
+        <p style="margin-top:10px">Âges et créneaux <span class="bientot">bientôt</span></p>
+      </div>
+      <div class="carte">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M4 20l6-8 4 4 6-10"/><path d="M14 6h6v6"/></svg></div>
+        <h3>Adultes</h3>
+        <p>Des créneaux de grimpe libre pour les adhérents, dans le respect du règlement intérieur du club.</p>
+        <p style="margin-top:10px">Créneaux <span class="bientot">bientôt</span></p>
+      </div>
+      <div class="carte">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-10 10H4v-6z"/><path d="M12 6l6 6"/></svg></div>
+        <h3>Ouvreurs bénévoles</h3>
+        <p>Envie de créer des blocs ? Les bénévoles motivés seront accompagnés par la FFME pour découvrir l'ouverture.</p>
+      </div>
+    </div>
+
+    <div class="deux" style="margin-top:60px">
+      <div class="texte">
+        <div class="surtitre">Compétitions <span class="aconf">à confirmer</span></div>
+        <h3>Un mur pensé pour <span class="orange">accueillir des compétitions</span></h3>
+        <p>Avec ses 5 mètres, le mur pourrait recevoir des rencontres de bloc régionales. Une belle occasion de faire venir les grimpeurs de toute la région à Péchabou.</p>
+      </div>
+      <div class="photo">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="300" fill="#22292e"/>
+          <g fill="none" stroke="#ff5a1f" stroke-width="10" stroke-linecap="round"><path d="M150 90h100v40a50 50 0 0 1-100 0z"/><path d="M150 100h-30a25 25 0 0 0 30 30"/><path d="M250 100h30a25 25 0 0 1-30 30"/><path d="M200 180v40M170 230h60"/></g>
+        </svg>
+        <span class="attente aconf">À confirmer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTUS : alimentées par Instagram, personne n'a à toucher au site -->
+<section id="actus">
+  <div class="wrap">
+    <div class="titre"><div class="surtitre">Les actus du club</div><h2>En direct <span class="orange">du mur</span></h2>
+      <p>Pose des prises, nouveaux blocs, séances, événements : tout passe par notre Instagram, et s'affiche ici automatiquement.</p></div>
+
+    <!-- Le fil Behold (gratuit) s'affiche ici dès que FEED_ID est rempli, en bas de page -->
+    <div id="fil-insta"></div>
+
+    <!-- Tant que le compte n'est pas branché : 6 cases d'attente -->
+    <div id="fil-attente" class="grille-insta">
+      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
+      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
+      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
+    </div>
+
+    <p class="note"><a class="btn" id="btn-insta" href="#">Suivre Pechabloc sur Instagram</a></p>
+  </div>
+</section>
+
+<!-- ADHÉRER -->
+<section id="adherer" class="alt">
+  <div class="wrap">
+    <div class="titre"><div class="surtitre">Adhérer</div><h2>C'est pour <span class="orange">tout le monde</span></h2>
+      <p>Une adhésion = la licence FFME (qui comprend l'assurance) + la cotisation du club. Tout se fera en ligne sur HelloAsso.</p></div>
+    <div class="offres">
+      <div class="offre vedette">
+        <div class="qui">Adultes</div>
+        <div class="prix">Tarif <span class="bientot">bientôt</span></div>
+        <ul><li>Licence FFME et assurance</li><li>Accès au mur par badge</li><li>Créneaux libres</li></ul>
+      </div>
+      <div class="offre">
+        <div class="qui">Jeunes</div>
+        <div class="prix">Tarif <span class="bientot">bientôt</span></div>
+        <ul><li>Licence FFME et assurance</li><li>Cours encadrés par un diplômé d'État</li><li>Dès septembre 2027</li></ul>
+      </div>
+    </div>
+    <p class="note"><a class="btn ligne" href="#">Pré-inscription sur HelloAsso — bientôt</a></p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap deux">
+    <div class="texte">
+      <h2 style="font-size:clamp(2.6rem,9vw,4rem)">Viens <span class="orange">grimper</span></h2>
+      <p style="margin-top:14px">Une question, envie de donner un coup de main ou de rejoindre le club ? Écris-nous.</p>
+      <div class="infos">
+        <div class="info"><div class="icone"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <div><b>Maison des Sports</b><span>Allée de la Musardière, 31320 Péchabou<br>à l'angle du chemin de l'Écluse de Vic</span></div></div>
+        <div class="info"><div class="icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><b>Horaires</b><span>Bientôt — ouverture au printemps 2027</span></div></div>
+        <div class="info"><div class="icone"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <div><b>Contact</b><span><a href="mailto:pechabloc@protonmail.com">pechabloc@protonmail.com</a></span></div></div>
+      </div>
+      <a class="btn" href="mailto:pechabloc@protonmail.com">Nous écrire</a>
+    </div>
+    <div>
+      <div class="photo carte-acces">
+        <iframe title="Plan d'accès : Maison des Sports, Péchabou" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=All%C3%A9e%20de%20la%20Musardi%C3%A8re%20%26%20Chemin%20de%20l%27%C3%89cluse%20de%20Vic%2C%2031320%20P%C3%A9chabou&z=17&output=embed"></iframe>
+      </div>
+      <p class="note"><a class="btn ligne" target="_blank" rel="noopener"
+        href="https://www.google.com/maps/dir/?api=1&destination=All%C3%A9e%20de%20la%20Musardi%C3%A8re%20%26%20Chemin%20de%20l%27%C3%89cluse%20de%20Vic%2C%2031320%20P%C3%A9chabou">Itinéraire ↗</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Pechabloc — Club d'escalade de bloc · Péchabou</div>
+    <div class="reseaux">
+      <a href="#" id="pied-insta" title="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* =====  RÉGLAGES : les deux seules lignes à remplir  ===== */
+  const INSTAGRAM_URL = "";   // ex. "https://www.instagram.com/pechabloc/"
+  const FEED_ID       = "";   // identifiant du fil donné par behold.so (formule gratuite)
+  /* ========================================================= */
+
+  if (INSTAGRAM_URL) {
+    for (const id of ["btn-insta", "pied-insta"]) document.getElementById(id).href = INSTAGRAM_URL;
+  } else {
+    document.getElementById("btn-insta").textContent = "Instagram du club — bientôt";
+  }
+  if (FEED_ID) {
+    const s = document.createElement("script");
+    s.type = "module"; s.src = "https://w.behold.so/widget.js";
+    document.head.append(s);
+    const w = document.createElement("behold-widget");
+    w.setAttribute("feed-id", FEED_ID);
+    document.getElementById("fil-insta").append(w);
+    document.getElementById("fil-attente").remove();
+  }
+</script>
+</body>
+</html>
