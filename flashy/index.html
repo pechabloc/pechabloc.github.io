@@ -199,7 +199,7 @@ html.anime .revele.vu{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.hero svg.mur g{animation:none}html.anime .revele{opacity:1;transform:none}}
 
 </style>
-<script>try{const m=localStorage.getItem("pb-mode");if(m)document.documentElement.dataset.mode=m}catch(e){}</script>
+<script>try{const m=localStorage.getItem("pb-mode:"+location.pathname);if(m)document.documentElement.dataset.mode=m}catch(e){}</script>
 </head>
 <body>
 
@@ -507,13 +507,13 @@ html.anime .revele.vu{opacity:1;transform:none}
     document.getElementById("b-langue").innerHTML = l === "en" ? "FR|<b>EN</b>" : "<b>FR</b>|EN";
     try { localStorage.setItem("pb-langue", l); } catch (e) {}
   }
-  function appliquerMode(m) {
+  function appliquerMode(m, memoriser) {
     document.documentElement.dataset.mode = m;
     document.getElementById("b-mode").textContent = m === "nuit" ? "☀️" : "🌙";
-    try { localStorage.setItem("pb-mode", m); } catch (e) {}
+    if (memoriser) try { localStorage.setItem("pb-mode:" + location.pathname, m); } catch (e) {}
   }
   document.getElementById("b-langue").onclick = () => appliquerLangue(LANGUE === "fr" ? "en" : "fr");
-  document.getElementById("b-mode").onclick = () => appliquerMode(document.documentElement.dataset.mode === "nuit" ? "jour" : "nuit");
+  document.getElementById("b-mode").onclick = () => appliquerMode(document.documentElement.dataset.mode === "nuit" ? "jour" : "nuit", true);
   let l0 = null; try { l0 = localStorage.getItem("pb-langue"); } catch (e) {}
   if (!l0) l0 = (navigator.language || "fr").toLowerCase().startsWith("fr") ? "fr" : "en";
   appliquerLangue(l0);
