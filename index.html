@@ -123,6 +123,13 @@
   .offre ul{list-style:none;margin-top:12px}
   .offre li{padding:5px 0 5px 24px;position:relative;font-size:.9rem;color:var(--doux)}
   .offre li:before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:700}
+  a.offre{display:block;color:inherit;text-decoration:none;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
+  a.offre:hover{transform:translateY(-4px);border-color:var(--orange);box-shadow:0 10px 30px rgba(255,90,31,.18)}
+  .offre .btn{margin-top:18px;width:100%;justify-content:center}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--orange);color:#fff;
+    font-weight:700;padding:12px 20px;border-radius:30px;box-shadow:0 8px 24px rgba(0,0,0,.4);transition:transform .3s;z-index:99;
+    max-width:90vw;text-align:center;font-size:.9rem}
+  #toast.vu{transform:translateX(-50%) translateY(0)}
   .note{text-align:center;color:var(--doux);font-size:.85rem;margin-top:24px}
 
   /* Contact */
@@ -287,18 +294,20 @@
     <div class="titre"><div class="surtitre">Adhérer</div><h2>C'est pour <span class="orange">tout le monde</span></h2>
       <p>Une adhésion = la licence FFME (qui comprend l'assurance) + la cotisation du club. Tout se fera en ligne sur HelloAsso.</p></div>
     <div class="offres">
-      <div class="offre vedette">
+      <a class="offre vedette adhesion" href="#">
         <div class="qui">Adultes</div>
         <div class="prix">Tarif <span class="bientot">bientôt</span></div>
         <ul><li>Licence FFME et assurance</li><li>Accès au mur sur les créneaux adultes</li><li>Créneaux libres</li></ul>
-      </div>
-      <div class="offre">
+        <span class="btn">J'adhère — Adultes →</span>
+      </a>
+      <a class="offre adhesion" href="#">
         <div class="qui">Jeunes</div>
         <div class="prix">Tarif <span class="bientot">bientôt</span></div>
         <ul><li>Licence FFME et assurance</li><li>Cours encadrés par un diplômé d'État</li><li>Dès septembre 2027</li></ul>
-      </div>
+        <span class="btn ligne">J'inscris mon enfant →</span>
+      </a>
     </div>
-    <p class="note"><a class="btn ligne" href="#">Pré-inscription sur HelloAsso — bientôt</a></p>
+    <p class="note"><a class="btn ligne adhesion" href="#">Pré-inscription sur HelloAsso</a></p>
   </div>
 </section>
 
@@ -342,12 +351,22 @@
   /* =====  RÉGLAGES : les deux seules lignes à remplir  ===== */
   const INSTAGRAM_URL = "";   // ex. "https://www.instagram.com/pechabloc/"
   const FEED_ID       = "";   // identifiant du fil donné par behold.so (formule gratuite)
+  const HELLOASSO_URL = "";   // lien de la page d'adhésion HelloAsso du club (cartes + bouton Adhérer)
   /* ========================================================= */
 
   if (INSTAGRAM_URL) {
     for (const id of ["btn-insta", "pied-insta"]) document.getElementById(id).href = INSTAGRAM_URL;
   } else {
     document.getElementById("btn-insta").textContent = "Instagram du club — bientôt";
+  }
+  for (const a of document.querySelectorAll(".adhesion")) {
+    if (HELLOASSO_URL) { a.href = HELLOASSO_URL; a.target = "_blank"; a.rel = "noopener"; }
+    else a.addEventListener("click", e => {
+      e.preventDefault();
+      const t = document.getElementById("toast");
+      t.textContent = "Les inscriptions ouvrent bientôt sur HelloAsso — suivez-nous sur Instagram !";
+      t.classList.add("vu"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("vu"), 3000);
+    });
   }
   if (FEED_ID) {
     const s = document.createElement("script");
@@ -359,5 +378,6 @@
     document.getElementById("fil-attente").remove();
   }
 </script>
+<div id="toast" role="status"></div>
 </body>
 </html>
