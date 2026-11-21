@@ -145,10 +145,28 @@
   .regl{font:600 .8rem var(--police-texte);color:var(--texte);background:var(--ardoise2);border:1px solid var(--trait);
     border-radius:99px;height:36px;min-width:36px;padding:0 12px;cursor:pointer}
   .regl b{color:var(--orange)}
-  .boule{width:36px;padding:0;border:2px solid var(--texte);background:conic-gradient(#ff5a1f 0 33%,#f4f6f7 0 66%,#ff2e93 0);
-    animation:respire 2.4s ease-in-out 3}
-  @keyframes respire{50%{transform:scale(1.18)}}
-  .regl.boule{border-radius:50%!important}
+  .reglages{position:relative}
+  #b-style{font-weight:700}
+  #panneau{position:absolute;right:0;top:calc(100% + 10px);width:280px;padding:16px;border-radius:18px;z-index:20;
+    background:var(--ardoise2);border:1px solid var(--trait);box-shadow:0 18px 50px rgba(0,0,0,.35);
+    font-family:var(--police-texte);color:var(--texte)}
+  #panneau[hidden]{display:none}
+  .p-titre{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--doux);margin-bottom:10px}
+  .p-styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .p-style{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px 8px;border-radius:12px;cursor:pointer;
+    background:transparent;border:2px solid transparent;color:var(--texte);font:600 .78rem var(--police-texte)}
+  .p-style:hover{background:var(--ardoise)}
+  .p-style svg{width:44px;height:36px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3))}
+  .p-style .trou{fill:rgba(0,0,0,.35)}
+  .p-style[data-design="flashy"] path{fill:url(#d-flashy)}
+  .p-style[data-design="orange"] path{fill:#ff5a1f;stroke:#16191c;stroke-width:2}
+  .p-style[data-design="epure"] path{fill:#ffffff;stroke:#f05a1a;stroke-width:3}
+  .p-style[aria-pressed="true"]{border-color:var(--orange);background:var(--ardoise)}
+  .p-ligne{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+  .p-choix{height:36px;border-radius:10px;cursor:pointer;background:var(--ardoise);border:2px solid transparent;
+    color:var(--texte);font:600 .82rem var(--police-texte)}
+  .p-choix[aria-pressed="true"]{border-color:var(--orange);color:var(--orange)}
+  .marque img{cursor:pointer}
   .photo .attente.bientot{background:var(--orange);color:var(--sur-orange);border-color:var(--orange)}
   header .wrap{gap:14px} nav{margin-left:auto}
   .maquette a{color:#222;font-weight:700}
@@ -270,8 +288,10 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
 </head>
 <body>
 
-<div class="maquette" data-nt>MAQUETTE — touchez la boule de couleur en haut pour changer de design · ☀️/🌙 jour ou nuit · FR/EN langue</div>
+<div class="maquette" data-nt>MAQUETTE — bouton « 🎨 Style » en haut : 3 styles au choix, jour / nuit, français / anglais</div>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="d-flashy" x1="0" x2="1">
+  <stop offset="0" stop-color="#ff5a1f"/><stop offset="1" stop-color="#ff2e93"/></linearGradient></defs></svg>
 <header>
   <div class="wrap">
     <a class="marque" translate="no" data-nt href="#"><img src="logo.png" alt="Logo Pechabloc"><span>Pecha<span class="orange">bloc</span></span></a>
@@ -279,9 +299,23 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
       <a href="#mur">Le mur</a><a href="#club">Le club</a><a href="#actus">Actus</a><a href="#adherer">Adhérer</a><a href="#contact">Contact</a>
     </nav>
     <div class="reglages">
-      <button type="button" id="b-design" class="regl boule" aria-label="Changer de design" title="Changer de design"></button>
-      <button type="button" id="b-mode" class="regl" aria-label="Jour / nuit">🌙</button>
-      <button type="button" id="b-langue" class="regl" aria-label="Langue / Language"><b>FR</b>|EN</button>
+      <button type="button" id="b-style" class="regl" aria-haspopup="true" aria-expanded="false" aria-controls="panneau">🎨 <span>Style</span></button>
+      <div id="panneau" role="dialog" aria-label="Style" hidden>
+        <div class="p-titre">Style</div>
+        <div class="p-styles" data-nt>
+          <button type="button" class="p-style" data-design="flashy"><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M6 20 C2 10 12 2 22 4 C33 6 39 14 35 22 C31 30 14 31 6 20 Z"/><circle cx="20" cy="16" r="3.2" class="trou"/></svg><span>Flashy</span></button>
+          <button type="button" class="p-style" data-design="orange"><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M6 20 C2 10 12 2 22 4 C33 6 39 14 35 22 C31 30 14 31 6 20 Z"/><circle cx="20" cy="16" r="3.2" class="trou"/></svg><span>Orange</span></button>
+          <button type="button" class="p-style" data-design="epure"><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M6 20 C2 10 12 2 22 4 C33 6 39 14 35 22 C31 30 14 31 6 20 Z"/><circle cx="20" cy="16" r="3.2" class="trou"/></svg><span>Épuré</span></button>
+        </div>
+        <div class="p-ligne">
+          <button type="button" class="p-choix" data-mode="jour">☀️ <span>Jour</span></button>
+          <button type="button" class="p-choix" data-mode="nuit">🌙 <span>Nuit</span></button>
+        </div>
+        <div class="p-ligne" data-nt>
+          <button type="button" class="p-choix" data-langue="fr">FR</button>
+          <button type="button" class="p-choix" data-langue="en">EN</button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -494,7 +528,7 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
 
   /* =====  Jour / nuit et langue : choix du visiteur, gardé pour sa prochaine visite  ===== */
   const EN = {
-    "Le mur":"The wall", "Le club":"The club", "Actus":"News", "Adhérer":"Join", "Contact":"Contact",
+    "Le mur":"The wall", "Jour":"Day", "Nuit":"Night", "Le club":"The club", "Actus":"News", "Adhérer":"Join", "Contact":"Contact",
     "Club associatif d'escalade de bloc":"Community bouldering club",
     "Un mur de bloc à la Maison des Sports de Péchabou, un club de bénévoles, et de la place pour les petits comme pour les grands.":"A bouldering wall at the Maison des Sports in Péchabou, a volunteer-run club, and room for kids and grown-ups alike.",
     "de hauteur":"high", "Bloc":"Bouldering", "sans corde ni baudrier":"no rope, no harness",
@@ -562,12 +596,12 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
       t.n.data = txt;
     }
     document.title = l === "en" ? "Pechabloc — Bouldering club in Péchabou" : TITRE_FR;
-    document.getElementById("b-langue").innerHTML = l === "en" ? "FR|<b>EN</b>" : "<b>FR</b>|EN";
+    marquer("data-langue", l);
     try { localStorage.setItem("pb-langue", l); } catch (e) {}
   }
   function appliquerMode(m, memoriser) {
     document.documentElement.dataset.mode = m;
-    document.getElementById("b-mode").textContent = m === "nuit" ? "☀️" : "🌙";
+    marquer("data-mode", m);
     if (memoriser) try { localStorage.setItem("pb-mode", m); } catch (e) {}
   }
   const DESIGNS = {"flashy": {"nom": "Flashy", "mode": "nuit"}, "orange": {"nom": "Orange", "mode": "nuit"}, "epure": {"nom": "Épuré", "mode": "jour"}};
@@ -576,20 +610,39 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
     const t = document.getElementById("toast");
     t.textContent = msg; t.classList.add("vu"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("vu"), 2200);
   }
-  document.getElementById("b-design").onclick = () => {
+  function marquer(attr, val) {
+    document.querySelectorAll("#panneau [" + attr + "]").forEach(b => b.setAttribute("aria-pressed", b.getAttribute(attr) === val));
+  }
+  function appliquerDesign(d, annoncer) {
     const html = document.documentElement;
-    const d = ORDRE[(ORDRE.indexOf(html.dataset.design) + 1) % ORDRE.length];
     html.dataset.design = d;
+    marquer("data-design", d);
     let m = null; try { m = localStorage.getItem("pb-mode"); localStorage.setItem("pb-design", d); } catch (e) {}
     appliquerMode(m || DESIGNS[d].mode);
-    montrer("Design : " + DESIGNS[d].nom + " (" + (ORDRE.indexOf(d) + 1) + "/" + ORDRE.length + ")");
-  };
-  document.getElementById("b-langue").onclick = () => appliquerLangue(LANGUE === "fr" ? "en" : "fr");
-  document.getElementById("b-mode").onclick = () => appliquerMode(document.documentElement.dataset.mode === "nuit" ? "jour" : "nuit", true);
+    if (annoncer) montrer("Style : " + DESIGNS[d].nom);
+  }
+  const panneau = document.getElementById("panneau"), bStyle = document.getElementById("b-style");
+  function ouvrir(oui) { panneau.hidden = !oui; bStyle.setAttribute("aria-expanded", oui); }
+  bStyle.onclick = e => { e.stopPropagation(); ouvrir(panneau.hidden); };
+  panneau.onclick = e => e.stopPropagation();
+  document.addEventListener("click", () => ouvrir(false));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") ouvrir(false); });
+  panneau.querySelectorAll("[data-design]").forEach(b => b.onclick = () => appliquerDesign(b.dataset.design));
+  panneau.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => appliquerMode(b.dataset.mode, true));
+  panneau.querySelectorAll("[data-langue]").forEach(b => b.onclick = () => appliquerLangue(b.dataset.langue));
+  /* Clin d'œil : toucher la boule orange du logo fait passer au style suivant */
+  document.querySelector(".marque img").addEventListener("click", e => {
+    const r = e.currentTarget.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    if (x > .36 && x < .62 && y > .15 && y < .44) {
+      e.preventDefault();
+      appliquerDesign(ORDRE[(ORDRE.indexOf(document.documentElement.dataset.design) + 1) % ORDRE.length], true);
+    }
+  });
   let l0 = null; try { l0 = localStorage.getItem("pb-langue"); } catch (e) {}
   if (!l0) l0 = (navigator.language || "fr").toLowerCase().startsWith("fr") ? "fr" : "en";
   appliquerLangue(l0);
   appliquerMode(document.documentElement.dataset.mode);
+  marquer("data-design", document.documentElement.dataset.design);
 
   /* Apparition au défilement : seulement si le design le demande (classe "anime" sur <html>) */
   if (document.documentElement.classList.contains("anime") && "IntersectionObserver" in window) {
