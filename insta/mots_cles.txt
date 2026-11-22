@@ -1,0 +1,131 @@
+Mots-clés du tri automatique des posts Instagram (validés par Fab le 22/11/2026)
+================================================================================
+
+Comment le script s'en sert :
+  1. Un hashtag de rubrique dans la légende (#pechabloc_cabouge, #pechabloc_astuces, #pechabloc_reflexes)
+     décide seul : il passe avant tous les mots-clés.
+  2. Sinon, le script cherche les mots ci-dessous dans la légende : mots entiers, sans tenir compte
+     des majuscules ni des accents, pluriel compris.
+  3. Si les mots trouvés viennent de DEUX rubriques ou plus, ou si aucun mot n'est trouvé :
+     le post part « à classer » (pas affiché sur le site) et un mail prévient.
+
+Pour modifier : un mot (ou une expression) par ligne, sous le titre de sa rubrique.
+Les lignes vides et ce texte d'en-tête (avant le premier titre entre crochets) sont ignorés.
+
+[Ça bouge !]
+soirée
+sortie
+compétition
+contest
+AG
+assemblée
+fête
+apéro
+rencontre
+inauguration
+ouverture
+journée
+stage
+week-end
+rendez-vous
+inscription
+nouveau bloc
+ouverture de blocs
+formation
+FFME
+
+[Astuces]
+astuce
+technique
+méthode
+lecture
+équilibre
+placement
+mouvement
+bassin
+pied
+pieds
+pied-main
+changement de pied
+carre interne
+carre externe
+pointe
+adhérence
+talon
+crochet de talon
+contre-pointe
+pied de pied
+lolotte
+yaniro
+drapeau
+genou
+verrou de genou
+opposition
+compression
+dülfer
+rétablissement
+croisé
+croisement
+figure du 4
+bicyclette
+ramonage
+écart
+gaston
+inversée
+coincement
+dynamique
+jeté
+lancé
+dyno
+balancier
+réglette
+pince
+bi-doigt
+mono-doigt
+arquée
+tendue
+pincée
+bac
+plat
+dalle
+dévers
+toit
+traversée
+vertical
+entraînement
+s'entraîner
+renforcement
+gainage
+poutre
+suspension
+traction
+campus
+pan
+endurance
+puissance
+souplesse
+mobilité
+circuit
+programme
+séance
+doigts
+avant-bras
+antagonistes
+
+[Bons réflexes]
+chute
+tomber
+réception
+tapis
+échauffement
+s'échauffer
+étirement
+récupération
+sécurité
+règle
+règlement
+parade
+blessure
+hydratation
+magnésie
+brosser

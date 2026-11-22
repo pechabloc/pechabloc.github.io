@@ -1,0 +1,6 @@
+// Classement à la main des posts Instagram : il passe avant le hashtag et les mots-clés.
+// Une ligne par post :  lien du post = rubrique
+// Rubriques possibles : Ça bouge !   Astuces   Bons réflexes   masquer   (masquer = ne pas l'afficher sur le site)
+// Exemple :
+// https://www.instagram.com/p/ABC123xyz/ = Astuces
+// Les lignes qui commencent par // sont ignorées.

@@ -107,7 +107,20 @@
   .grille-insta .case{aspect-ratio:1/1;border-radius:12px;background:linear-gradient(135deg,var(--ardoise2),var(--ardoise));
     border:1px dashed var(--trait);display:grid;place-items:center;text-align:center;padding:8px}
   .grille-insta .case span{font-size:.7rem;color:var(--doux);font-weight:600}
-  #fil-insta{max-width:780px;margin:0 auto}
+  .post{position:relative;display:block;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--ardoise2);color:#fff;text-decoration:none}
+  .post img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .post:hover img{transform:scale(1.05)}
+  .post .leg{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 8px;font-size:.72rem;line-height:1.3;
+    background:linear-gradient(transparent,rgba(0,0,0,.78))}
+  @media(max-width:520px){.post .leg{display:none}}
+  .post .leg span{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .post .multi{position:absolute;top:8px;right:8px;width:20px;height:20px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+  .post .multi svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2}
+  .onglets{display:flex;justify-content:center;gap:10px;margin:0 auto 22px;flex-wrap:wrap}
+  .onglet{font:inherit;font-weight:700;font-size:.9rem;padding:9px 18px;border-radius:99px;cursor:pointer;
+    background:transparent;color:var(--texte);border:1.5px solid var(--trait)}
+  .onglet[aria-selected="true"]{background:var(--orange);border-color:var(--orange);color:#fff}
+  .plus{display:block;margin:18px auto 0} .plus[hidden]{display:none}
 
   /* Adhésion */
   .offres{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:780px;margin:0 auto}
@@ -290,7 +303,7 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
   <div class="wrap">
     <a class="marque" translate="no" data-nt href="#"><img src="logo.png" alt="Logo Pechabloc"><span>Pecha<span class="orange">bloc</span></span></a>
     <nav>
-      <a href="#mur">Le mur</a><a href="#club">Le club</a><a href="#actus">Actus</a><a href="#adherer">Adhérer</a><a href="#contact">Contact</a>
+      <a href="#mur">Le mur</a><a href="#club">Le club</a><a href="#actus">Ça bouge !</a><a href="#astuces">Astuces</a><a href="#adherer">Adhérer</a><a href="#contact">Contact</a>
     </nav>
     <div class="reglages">
       <button type="button" id="b-mode" class="regl" aria-label="Jour / nuit" title="Jour / nuit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
@@ -388,40 +401,42 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
 
     <div class="deux" style="margin-top:60px">
       <div class="texte">
-        <div class="surtitre">Compétitions <span class="aconf">à confirmer</span></div>
+        <div class="surtitre">Compétitions <span class="aconf">bientôt</span></div>
         <h3>Un mur pensé pour <span class="orange">accueillir des compétitions</span></h3>
         <p>Avec ses 5 mètres, le mur pourrait recevoir des rencontres de bloc régionales. Une belle occasion de faire venir les grimpeurs de toute la région à Péchabou.</p>
       </div>
       <div class="photo">
         <img src="images/mur_salle.jpg" alt="La salle et le mur de bloc de la Maison des Sports" loading="lazy">
-        <span class="attente aconf">À confirmer</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ACTUS : alimentées par Instagram, personne n'a à toucher au site -->
+<!-- ÇA BOUGE ! et ASTUCES : alimentées par Instagram (insta/posts.json, trié chaque matin par insta/tri.py) -->
 <section id="actus">
   <div class="wrap">
-    <div class="titre"><div class="surtitre">Les actus du club</div><h2>En direct <span class="orange">du mur</span></h2>
-      <p>Pose des prises, nouveaux blocs, séances, événements : tout passe par notre Instagram, et s'affiche ici automatiquement.</p></div>
-
-    <!-- Le fil Behold (gratuit) s'affiche ici dès que FEED_ID est rempli, en bas de page -->
-    <div id="fil-insta"></div>
-
-    <!-- Tant que le compte n'est pas branché : 6 cases d'attente -->
-    <div id="fil-attente" class="grille-insta">
-      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
-      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
-      <div class="case"><span>Publication Instagram</span></div><div class="case"><span>Publication Instagram</span></div>
-    </div>
-
+    <div class="titre"><div class="surtitre">La vie du club</div><h2>Ça <span class="orange">bouge !</span></h2>
+      <p>Sorties, soirées, compétitions, nouveaux blocs : tout passe par notre Instagram, et s'affiche ici automatiquement.</p></div>
+    <div class="grille-insta" id="grille-ca_bouge"></div>
+    <button type="button" class="btn ligne plus" id="plus-ca_bouge" hidden>Voir plus</button>
     <p class="note"><a class="btn" id="btn-insta" href="#">Suivre Pechabloc sur Instagram</a></p>
   </div>
 </section>
 
-<!-- ADHÉRER -->
-<section id="adherer" class="alt">
+<section id="astuces" class="alt">
+  <div class="wrap">
+    <div class="titre"><div class="surtitre">Pour bien grimper</div><h2>Astuces &amp; <span class="orange">bons réflexes</span></h2>
+      <p>Les trucs de grimpe et les règles de sécurité partagés par le club, à revoir quand tu veux.</p></div>
+    <div class="onglets" role="tablist">
+      <button type="button" class="onglet" role="tab" data-rub="astuces" aria-selected="true">💡 Astuces</button>
+      <button type="button" class="onglet" role="tab" data-rub="reflexes" aria-selected="false">🛡️ Bons réflexes</button>
+    </div>
+    <div class="grille-insta" id="grille-conseils"></div>
+    <button type="button" class="btn ligne plus" id="plus-conseils" hidden>Voir plus</button>
+  </div>
+</section>
+
+<section id="adherer">
   <div class="wrap">
     <div class="titre"><div class="surtitre">Adhérer</div><h2>C'est pour <span class="orange">tout le monde</span></h2>
       <p>Une adhésion = la licence FFME (qui comprend l'assurance) + la cotisation du club. Tout se fera en ligne sur HelloAsso.</p></div>
@@ -444,7 +459,7 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
+<section id="contact" class="alt">
   <div class="wrap deux">
     <div class="texte">
       <h2 style="font-size:clamp(2.6rem,9vw,4rem)">Viens <span class="orange">grimper</span></h2>
@@ -482,7 +497,6 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
 <script>
   /* =====  RÉGLAGES : les deux seules lignes à remplir  ===== */
   const INSTAGRAM_URL = "https://www.instagram.com/pechabloc_escalade_pechabou/";   // ex. "https://www.instagram.com/pechabloc/"
-  const FEED_ID       = "ypSBSN4rYhYPCdsNcYSE";   // identifiant du fil donné par behold.so (formule gratuite)
   const HELLOASSO_URL = "";   // lien de la page d'adhésion HelloAsso du club (cartes + bouton Adhérer)
   /* ========================================================= */
 
@@ -500,19 +514,47 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
       t.classList.add("vu"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("vu"), 3000);
     });
   }
-  if (FEED_ID) {
-    const s = document.createElement("script");
-    s.type = "module"; s.src = "https://w.behold.so/widget.js";
-    document.head.append(s);
-    const w = document.createElement("behold-widget");
-    w.setAttribute("feed-id", FEED_ID);
-    document.getElementById("fil-insta").append(w);
-    document.getElementById("fil-attente").remove();
+  /* =====  Posts Instagram triés (insta/posts.json, mis à jour chaque matin)  ===== */
+  const PAR_PAGE = 6;
+  let POSTS = [], ONGLET = "astuces";
+  const vus = { ca_bouge: PAR_PAGE, conseils: PAR_PAGE };
+  const MULTI = '<span class="multi"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="13" height="13" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/></svg></span>';
+  const echap = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  function remplir(grille, bouton, liste, cle, vide) {
+    const g = document.getElementById(grille), b = document.getElementById(bouton);
+    if (!liste.length) {
+      g.innerHTML = '<div class="case"><span>' + traduire(vide) + '</span></div><div class="case"></div><div class="case"></div>';
+      b.hidden = true; return;
+    }
+    g.innerHTML = liste.slice(0, vus[cle]).map(p =>
+      '<a class="post" href="' + echap(p.lien) + '" target="_blank" rel="noopener" title="' + echap(p.legende) + '">'
+      + (p.image ? '<img src="' + echap(p.image) + '" alt="' + echap(p.legende.slice(0, 120)) + '" loading="lazy">' : "")
+      + (p.nb_photos > 1 ? MULTI : "") + '<span class="leg"><span>' + echap(p.legende) + '</span></span></a>').join("")
+      + '<div class="case"></div>'.repeat(Math.max(0, 3 - liste.length));   // moins de 3 posts : la ligne est complétée
+    b.hidden = liste.length <= vus[cle];
+    b.textContent = traduire("Voir plus");
   }
+  function rendreInsta() {
+    remplir("grille-ca_bouge", "plus-ca_bouge", POSTS.filter(p => p.rubrique === "ca_bouge"), "ca_bouge",
+            "Les premières nouvelles arrivent bientôt");
+    remplir("grille-conseils", "plus-conseils", POSTS.filter(p => p.rubrique === ONGLET), "conseils",
+            ONGLET === "astuces" ? "Les premières astuces arrivent bientôt" : "Les premiers bons réflexes arrivent bientôt");
+  }
+  for (const o of document.querySelectorAll(".onglet")) o.addEventListener("click", () => {
+    ONGLET = o.dataset.rub; vus.conseils = PAR_PAGE;
+    for (const x of document.querySelectorAll(".onglet")) x.setAttribute("aria-selected", x === o);
+    rendreInsta();
+  });
+  document.getElementById("plus-ca_bouge").onclick = () => { vus.ca_bouge += PAR_PAGE; rendreInsta(); };
+  document.getElementById("plus-conseils").onclick = () => { vus.conseils += PAR_PAGE; rendreInsta(); };
+  fetch("insta/posts.json?" + new Date().toISOString().slice(0, 13))
+    .then(r => r.ok ? r.json() : [])
+    .catch(() => [])
+    .then(l => { POSTS = l; rendreInsta(); });
 
   /* =====  Jour / nuit et langue : choix du visiteur, gardé pour sa prochaine visite  ===== */
   const EN = {
-    "Le mur":"The wall", "Jour":"Day", "Nuit":"Night", "Épuré":"Clean", "Le club":"The club", "Actus":"News", "Adhérer":"Join", "Contact":"Contact",
+    "Le mur":"The wall", "Jour":"Day", "Nuit":"Night", "Épuré":"Clean", "Le club":"The club", "Actus":"News", "Ça bouge !":"What's on", "Astuces":"Tips", "Adhérer":"Join", "Contact":"Contact",
     "Club associatif d'escalade de bloc":"Community bouldering club",
     "Un mur de bloc à la Maison des Sports de Péchabou, un club de bénévoles, et de la place pour les petits comme pour les grands.":"A bouldering wall at the Maison des Sports in Péchabou, a volunteer-run club, and room for kids and grown-ups alike.",
     "de hauteur":"high", "Bloc":"Bouldering", "sans corde ni baudrier":"no rope, no harness",
@@ -536,12 +578,18 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
     "Des créneaux de grimpe libre pour les adhérents, dans le respect du règlement intérieur du club.":"Free climbing sessions for members, following the club rules.",
     "Créneaux":"Sessions", "Ouvreurs bénévoles":"Volunteer route setters",
     "Envie de créer des blocs ? Les bénévoles motivés seront accompagnés par la FFME pour découvrir l'ouverture.":"Fancy creating problems? Keen volunteers will be trained by the FFME in route setting.",
-    "Compétitions":"Competitions", "à confirmer":"to be confirmed", "À confirmer":"To be confirmed",
+    "Compétitions":"Competitions", "à confirmer":"to be confirmed", "en projet":"planned", "À confirmer":"To be confirmed",
     "Un mur pensé pour":"A wall built to", "accueillir des compétitions":"host competitions",
     "Avec ses 5 mètres, le mur pourrait recevoir des rencontres de bloc régionales. Une belle occasion de faire venir les grimpeurs de toute la région à Péchabou.":"At 5 metres high, the wall could host regional bouldering events, a great way to bring climbers from all over the region to Péchabou.",
-    "Les actus du club":"Club news", "En direct":"Live", "du mur":"from the wall",
-    "Pose des prises, nouveaux blocs, séances, événements : tout passe par notre Instagram, et s'affiche ici automatiquement.":"New holds, new problems, sessions, events: it all goes on our Instagram and shows up here automatically.",
-    "Publication Instagram":"Instagram post", "Suivre Pechabloc sur Instagram":"Follow Pechabloc on Instagram",
+    "La vie du club":"Club life",
+    "Sorties, soirées, compétitions, nouveaux blocs : tout passe par notre Instagram, et s'affiche ici automatiquement.":"Trips, evenings, competitions, new problems: it all goes on our Instagram and shows up here automatically.",
+    "Pour bien grimper":"Climb better", "Astuces &":"Tips &", "Ça":"What's", "bouge !":"on", "bons réflexes":"good habits",
+    "Les trucs de grimpe et les règles de sécurité partagés par le club, à revoir quand tu veux.":"Climbing tips and safety rules shared by the club, to look back at whenever you like.",
+    "💡 Astuces":"💡 Tips", "🛡️ Bons réflexes":"🛡️ Good habits", "Voir plus":"See more",
+    "Les premières nouvelles arrivent bientôt":"First news coming soon",
+    "Les premières astuces arrivent bientôt":"First tips coming soon",
+    "Les premiers bons réflexes arrivent bientôt":"First good habits coming soon",
+    "Suivre Pechabloc sur Instagram":"Follow Pechabloc on Instagram",
     "Instagram du club — bientôt":"Club Instagram — soon",
     "C'est pour":"It's for", "tout le monde":"everyone",
     "Une adhésion = la licence FFME (qui comprend l'assurance) + la cotisation du club. Tout se fera en ligne sur HelloAsso.":"Membership = the FFME licence (insurance included) + the club fee. It will all be done online on HelloAsso.",
@@ -582,6 +630,7 @@ html[data-design="epure"] .pastilles{justify-content:flex-start}
     document.title = l === "en" ? "Pechabloc — Bouldering club in Péchabou" : TITRE_FR;
     document.getElementById("b-langue").innerHTML = l === "en" ? '<span>FR<span class="sep">|</span><b>EN</b></span>' : '<span><b>FR</b><span class="sep">|</span>EN</span>';
     try { localStorage.setItem("pb-langue", l); } catch (e) {}
+    if (typeof rendreInsta === "function") rendreInsta();
   }
   function appliquerMode(m, memoriser) {
     document.documentElement.dataset.mode = m;

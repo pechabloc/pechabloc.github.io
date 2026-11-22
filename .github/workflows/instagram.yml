@@ -1,0 +1,40 @@
+# Relève quotidienne des posts Instagram du club (fil Behold) et tri par rubrique.
+# À placer dans le dépôt du site : .github/workflows/instagram.yml
+name: Instagram
+
+on:
+  schedule:
+    - cron: "30 6 * * *"      # chaque jour vers 7 h 30 (heure de Paris, hiver)
+  workflow_dispatch:           # bouton « Run workflow » pour lancer à la main
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  releve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Relever et trier les posts
+        env:
+          ALERTE: ${{ runner.temp }}/a_classer.md
+        run: python3 insta/tri.py
+
+      - name: Enregistrer sur le site
+        run: |
+          git config user.name "Pechabloc"
+          git config user.email "pechabloc@protonmail.com"
+          git add insta
+          git diff --cached --quiet || git commit -m "Instagram : releve du $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Prévenir s'il y a des posts à classer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f="${{ runner.temp }}/a_classer.md"
+          if [ -f "$f" ]; then
+            gh issue create --title "Instagram : post(s) à classer" --body-file "$f"
+          fi
